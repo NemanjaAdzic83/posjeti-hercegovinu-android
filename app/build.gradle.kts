@@ -8,6 +8,11 @@ android {
         version = release(36) {
             minorApiLevel = 1
         }
+
+    }
+
+    buildFeatures{
+        viewBinding = true
     }
 
     defaultConfig {
@@ -52,4 +57,12 @@ dependencies {
 
     // Logging interceptor - ispisuje zahtjeve i odgovore U Logcat (odlicno za debug)
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+
+    // RecyclerView - efikasna lista koja pravi samo kartice koje su trenutno vidljive
+    implementation("androidx.recyclerview:recyclerview:1.4.0")
+
+    // ViewModel i LiveData cuvaju podatke ekrana i obavjestavaju ekran kad se promjene
+    implementation("androidx.lifecycle:lifecycle-viewmodel:2.11.0")
+    implementation("androidx.lifecycle:lifecycle-livedata:2.11.0")
+
 }

@@ -2,16 +2,22 @@ package com.posjetihercegovinu.app;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.posjetihercegovinu.app.databinding.ActivityMainBinding;
 import com.posjetihercegovinu.app.model.PageResponse;
 import com.posjetihercegovinu.app.model.Place;
 import com.posjetihercegovinu.app.network.RetrofitClient;
+import com.posjetihercegovinu.app.ui.PlaceAdapter;
+import com.posjetihercegovinu.app.ui.PlaceViewModel;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -19,32 +25,51 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
+    private ActivityMainBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+        // ViewBinding umjesto setContentView(R.layout...).
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        // Padding za status bar i navigacionu traku, na korijenski element preko bindinga.
+        ViewCompat.setOnApplyWindowInsetsListener(binding.getRoot(), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        RetrofitClient.getApiService().getPlaces(0,10).enqueue(new Callback<PageResponse<Place>>() {
-            @Override
-            public void onResponse(Call<PageResponse<Place>> call, Response<PageResponse<Place>> response) {
-                if (response.isSuccessful() && response.body() != null){
-                    Log.d("API_TEST", "broj mjesta: " + response.body().getContent());
-                }  else {
-                    Log.e("API_TEST","Greska, status: " + response.code());
-                }
-            }
+        PlaceAdapter adapter = new PlaceAdapter();
+        binding.recyclerPlaces.setLayoutManager(new LinearLayoutManager(this));
+        binding.recyclerPlaces.setAdapter(adapter);
 
-            @Override
-            public void onFailure(Call<PageResponse<Place>> call, Throwable t) {
-                Log.e("API_TEST", "Neuspjesno: " + t.getMessage());
+        PlaceViewModel viewModel = new ViewModelProvider(this).get(PlaceViewModel.class);
+
+        viewModel.getPlaces().observe(this, places -> {
+            adapter.setPlaces(places);
+            if (places.isEmpty()){
+                binding.textMessage.setText("Nema mjesta za prikaz");
+                binding.buttonRetry.setVisibility(View.GONE);
+                binding.layoutMessage.setVisibility(View.VISIBLE);
+            }else {
+                binding.layoutMessage.setVisibility(View.GONE);
             }
         });
+
+        viewModel.getLoading().observe(this, isLoading ->
+                binding.progressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE));
+
+        viewModel.getError().observe(this, message -> {
+            if (message != null){
+                binding.textMessage.setText(message);
+                binding.buttonRetry.setVisibility(View.VISIBLE);
+                binding.layoutMessage.setVisibility(View.VISIBLE);
+            }
+        });
+
+        binding.buttonRetry.setOnClickListener( v -> viewModel.loadPlaces());
 
 
     }

@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<!-- FrameLayout slaze elemente jedan preko drugog.
+ U kodu ce se prkazivati samo onaj koji treba: lista, kruzic ucitavanja
+ ili poruka o gresci-->
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -7,13 +12,46 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
+    <!-- Lista mjesta -->
+   <androidx.recyclerview.widget.RecyclerView
+       android:id="@+id/recyclerPlaces"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:paddingVertical="8dp"
+       android:clipToPadding="false"/>
+
+    <!-- Kruzic za ucitavanje , u sredini ekrana -->
+    <ProgressBar
+        android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_gravity="center"
+        android:visibility="gone"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- Poruka (greska ili "nema mjesta") i dugme "Pokusaj ponovo" -->
+    <LinearLayout
+        android:id="@+id/layoutMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/textMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"/>
+        <Button
+            android:id="@+id/buttonRetry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Pokusaj ponovo"/>
+
+    </LinearLayout>
+
+
+</FrameLayout>
