@@ -19,6 +19,11 @@ public class PlaceRepository {
         void onError(String message);
     }
 
+    public interface PlaceCallback{
+        void onSuccess(Place place);
+        void onError(String message);
+    }
+
     public void getPlaces(int page, int size, PlacesCallback callback){
         RetrofitClient.getApiService().getPlaces(page, size)
                 .enqueue(new Callback<PageResponse<Place>>() {
@@ -37,4 +42,28 @@ public class PlaceRepository {
                     }
                 });
     }
+
+    public void getPlaceById(long id,PlaceCallback callback){
+        RetrofitClient.getApiService().getPlaceById(id).enqueue(new Callback<Place>() {
+            @Override
+            public void onResponse(Call<Place> call, Response<Place> response) {
+                if (response.isSuccessful() && response.body() != null){
+                    callback.onSuccess(response.body());
+                } else if (response.code() == 404) {
+                    // Backend vraca 404 kad mjesto ne postoji (npr obrisano je u medjuvremenu)
+                    callback.onError("Mjesto vise ne postoji");
+                }else {
+                    callback.onError("Greska server (kod " + response.code() + ")");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Place> call, Throwable t) {
+                callback.onError("Nema veze sa serverom");
+            }
+        });
+    }
+
+
+
 }

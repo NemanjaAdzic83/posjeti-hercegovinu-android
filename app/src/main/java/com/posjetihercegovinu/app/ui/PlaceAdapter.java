@@ -23,6 +23,18 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHol
     // Lista mjesta koja se trenutno prikazuje. Na pocetku je prazna
     private final List<Place> places = new ArrayList<>();
 
+    // Interfejs preko kojeg  adapter javlja Activity-ju da je neko kliknup na mjesto
+    public interface OnPlaceClickListener{
+        void onPlaceClick(Place place);
+    }
+
+    private final OnPlaceClickListener listener;
+
+    public PlaceAdapter(OnPlaceClickListener listener){
+        this.listener = listener;
+    }
+
+
     //Zamjeni staru listu novom i reci RecyclerView-u da se ponovo iscrta
     public void setPlaces(List<Place> newPlaces){
         places.clear();
@@ -51,6 +63,7 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHol
         // Kategorija ili adresa mogu biti prazne , pa pazimo da ne pise "null"
         holder.binding.textCategory.setText(place.getCategoryName() != null ? place.getCategoryName() : "");
         holder.binding.textAddress.setText(place.getAddress() != null ? place.getAddress() : "");
+        holder.binding.getRoot().setOnClickListener( v -> listener.onPlaceClick(place));
     }
 
     // Koliko ukupno ima stavki
