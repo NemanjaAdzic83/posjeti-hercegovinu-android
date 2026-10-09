@@ -5,9 +5,14 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import com.posjetihercegovinu.app.BuildConfig;
+
 public class RetrofitClient {
 
-    private static final String BASE_URL = "http://10.0.2.2:8080/";
+    // Ovo je IP adresa pokretanje na za emulatoru
+    private static final String BASE_URL = BuildConfig.API_BASE_URL;
+
+
 
     // jedna zajednicka instanca za cijelu apikaciju
     private static ApiService apiService;

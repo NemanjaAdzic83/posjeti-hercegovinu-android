@@ -33,6 +33,10 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String","API_BASE_URL","\"$apiBaseUrl\"")
+
+        val mapsKey = localProps.getProperty("MAPS_API_KEY","")
+        manifestPlaceholders["MAPS_API_KEY"] = mapsKey
+
     }
 
     buildTypes {
@@ -74,5 +78,8 @@ dependencies {
     // ViewModel i LiveData cuvaju podatke ekrana i obavjestavaju ekran kad se promjene
     implementation("androidx.lifecycle:lifecycle-viewmodel:2.11.0")
     implementation("androidx.lifecycle:lifecycle-livedata:2.11.0")
+
+    // Google Maps SDK za Android
+    implementation("com.google.android.gms:play-services-maps:20.0.0")
 
 }

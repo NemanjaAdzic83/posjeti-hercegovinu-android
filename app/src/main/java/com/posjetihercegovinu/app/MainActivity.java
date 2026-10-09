@@ -5,9 +5,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.graphics.Insets;
@@ -23,6 +26,7 @@ import com.posjetihercegovinu.app.model.Category;
 import com.posjetihercegovinu.app.model.PageResponse;
 import com.posjetihercegovinu.app.model.Place;
 import com.posjetihercegovinu.app.network.RetrofitClient;
+import com.posjetihercegovinu.app.ui.MapActivity;
 import com.posjetihercegovinu.app.ui.PlaceAdapter;
 import com.posjetihercegovinu.app.ui.PlaceDetailActivity;
 import com.posjetihercegovinu.app.ui.PlaceViewModel;
@@ -116,6 +120,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.action_map){
+            startActivity(new Intent(this, MapActivity.class));
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void showCategoriesChips(List<Category> categories, PlaceViewModel viewModel) {
