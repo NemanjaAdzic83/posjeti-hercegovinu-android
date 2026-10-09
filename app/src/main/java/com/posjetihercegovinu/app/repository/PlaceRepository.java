@@ -24,8 +24,8 @@ public class PlaceRepository {
         void onError(String message);
     }
 
-    public void getPlaces(int page, int size, PlacesCallback callback){
-        RetrofitClient.getApiService().getPlaces(page, size)
+    public void getPlaces(int page, int size,String q, Long categoryId, PlacesCallback callback){
+        RetrofitClient.getApiService().getPlaces(page, size, q, categoryId)
                 .enqueue(new Callback<PageResponse<Place>>() {
                     @Override
                     public void onResponse(Call<PageResponse<Place>> call, Response<PageResponse<Place>> response) {
