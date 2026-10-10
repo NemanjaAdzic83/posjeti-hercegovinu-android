@@ -82,4 +82,11 @@ dependencies {
     // Google Maps SDK za Android
     implementation("com.google.android.gms:play-services-maps:20.0.0")
 
+    // Room lokalna baza na telefonu
+    implementation("androidx.room:room-runtime:2.8.5")
+
+    //Anonotation processor - pri bildu cita nase anotacije(@Entity @Dao...) i generise kod
+    // Za Javu se koristi "annotationProcessor" , a ne "ksp"
+    annotationProcessor("androidx.room:room-compiler:2.8.5")
+
 }

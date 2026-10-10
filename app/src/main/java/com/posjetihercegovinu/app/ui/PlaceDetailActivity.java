@@ -6,6 +6,7 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.posjetihercegovinu.app.R;
 import com.posjetihercegovinu.app.databinding.ActivityPlaceDetailBinding;
 import com.posjetihercegovinu.app.model.Place;
 
@@ -39,6 +40,18 @@ public class PlaceDetailActivity extends AppCompatActivity {
                 showPlace(place);
             }
         });
+
+        // Javi modelu koji id pratimo , pa srce zna kojeg mjesta se tice
+        viewModel.setPlaceId(placeId);
+
+        // Prebaci ikonu srca kad se promjeni status favorita
+        viewModel.getIsFavorite().observe(this, favorite ->
+                binding.buttonFavorite.setImageResource(
+                        Boolean.TRUE.equals(favorite) ? R.drawable.ic_favorite : R.drawable.ic_favorite_border
+                ));
+
+        binding.buttonFavorite.setOnClickListener( v -> viewModel.toggleFavorite());
+
 
         viewModel.getLoading().observe(this , isLoading -> {
             binding.progressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE);
