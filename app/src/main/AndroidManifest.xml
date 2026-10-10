@@ -35,6 +35,8 @@
             android:exported="false" />
         <activity android:name=".ui.MapActivity"
             android:exported="false"/>
+        <activity android:name=".ui.FavoritesActivity"
+            android:exported="false"/>
     </application>
 
 </manifest>

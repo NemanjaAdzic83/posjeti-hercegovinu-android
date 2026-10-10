@@ -7,4 +7,9 @@
         android:title="Mapa"
         app:showAsAction="always"/>
 
+    <item
+        android:id="@+id/action_favorites"
+        android:title="Favoriti"
+        app:showAsAction="always"/>
+
 </menu>

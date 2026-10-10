@@ -22,6 +22,7 @@
         app:iconifiedByDefault="false"
         app:queryHint="Pretrazi mjesta..."/>
 
+
     <!-- Vodoravni skrol - akom ima mnogo kategorija , cipovi se ne lome u novi red nego
      se prelistavaju prstom-->
     <HorizontalScrollView

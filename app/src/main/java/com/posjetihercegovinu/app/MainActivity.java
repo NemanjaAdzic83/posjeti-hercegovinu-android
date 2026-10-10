@@ -26,6 +26,7 @@ import com.posjetihercegovinu.app.model.Category;
 import com.posjetihercegovinu.app.model.PageResponse;
 import com.posjetihercegovinu.app.model.Place;
 import com.posjetihercegovinu.app.network.RetrofitClient;
+import com.posjetihercegovinu.app.ui.FavoritesActivity;
 import com.posjetihercegovinu.app.ui.MapActivity;
 import com.posjetihercegovinu.app.ui.PlaceAdapter;
 import com.posjetihercegovinu.app.ui.PlaceDetailActivity;
@@ -119,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+        
 
     }
 
@@ -128,10 +130,14 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    // Poziva se kad korisnik klikn estavku u maniju na traci, MAPA otvara mapu, a FAVORITI otvara ekran sa sacuvanim mjestima
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.action_map){
             startActivity(new Intent(this, MapActivity.class));
+            return true;
+        } else if (item.getItemId() == R.id.action_favorites) {
+            startActivity(new Intent(this, FavoritesActivity.class));
             return true;
         }
         return super.onOptionsItemSelected(item);
