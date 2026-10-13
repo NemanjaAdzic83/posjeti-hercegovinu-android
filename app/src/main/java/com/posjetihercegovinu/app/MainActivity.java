@@ -27,6 +27,7 @@ import com.posjetihercegovinu.app.model.PageResponse;
 import com.posjetihercegovinu.app.model.Place;
 import com.posjetihercegovinu.app.network.RetrofitClient;
 import com.posjetihercegovinu.app.ui.FavoritesActivity;
+import com.posjetihercegovinu.app.ui.LoginActivity;
 import com.posjetihercegovinu.app.ui.MapActivity;
 import com.posjetihercegovinu.app.ui.PlaceAdapter;
 import com.posjetihercegovinu.app.ui.PlaceDetailActivity;
@@ -138,6 +139,9 @@ public class MainActivity extends AppCompatActivity {
             return true;
         } else if (item.getItemId() == R.id.action_favorites) {
             startActivity(new Intent(this, FavoritesActivity.class));
+            return true;
+        }else if (item.getItemId() == R.id.action_login){
+            startActivity(new Intent(this, LoginActivity.class));
             return true;
         }
         return super.onOptionsItemSelected(item);

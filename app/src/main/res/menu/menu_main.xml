@@ -12,4 +12,9 @@
         android:title="Favoriti"
         app:showAsAction="always"/>
 
+    <item
+        android:id="@+id/action_login"
+        android:title="Prijava"
+        app:showAsAction="never"/>
+
 </menu>

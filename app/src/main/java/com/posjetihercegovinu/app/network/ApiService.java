@@ -1,13 +1,18 @@
 package com.posjetihercegovinu.app.network;
 
+import com.posjetihercegovinu.app.model.AuthResponse;
 import com.posjetihercegovinu.app.model.Category;
+import com.posjetihercegovinu.app.model.LoginRequest;
 import com.posjetihercegovinu.app.model.PageResponse;
 import com.posjetihercegovinu.app.model.Place;
+import com.posjetihercegovinu.app.model.RegisterRequest;
 
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 import retrofit2.http.Path;
 
@@ -30,5 +35,14 @@ public interface ApiService {
     // GET /api/categories - backend vraca obicnu listu(nje stranicu)
     @GET("/api/categories")
     Call<List<Category>> getCategories();
+
+    // @POST("api/auth/login") - salje email i lozinku (kao JSON), vraca token i korisnika
+    @POST("api/auth/login")
+    Call<AuthResponse> login (@Body LoginRequest request);
+
+    // @POST("api/auth/register") - salje ime, email i lozinku, vraca token i korisnika
+    @POST("api/auth/register")
+    Call<AuthResponse> register(@Body RegisterRequest request);
+
 
 }
