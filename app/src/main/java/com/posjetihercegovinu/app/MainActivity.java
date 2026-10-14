@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -21,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
+import com.posjetihercegovinu.app.data.local.TokenStorage;
 import com.posjetihercegovinu.app.databinding.ActivityMainBinding;
 import com.posjetihercegovinu.app.model.Category;
 import com.posjetihercegovinu.app.model.PageResponse;
@@ -143,6 +145,13 @@ public class MainActivity extends AppCompatActivity {
         }else if (item.getItemId() == R.id.action_login){
             startActivity(new Intent(this, LoginActivity.class));
             return true;
+        } else if (item.getItemId() == R.id.action_logout) {
+            // Brise token i podateke, osvjezava meni i javlja korisniku
+            new TokenStorage(this).clear();
+            invalidateOptionsMenu();
+            Toast.makeText(this, "Odjavljeni ste", Toast.LENGTH_SHORT).show();
+            return true;
+
         }
         return super.onOptionsItemSelected(item);
     }
@@ -183,6 +192,29 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy(){
         super.onDestroy();
         searchHandler.removeCallbacksAndMessages(null);
+    }
+
+    // Poziva se svaki put prije prikaza menija. Prikazuje "Prijava" ako nema prijavljenog
+    // korisnika , a "Odjava" ako ima
+    public boolean onPrepareOptionsMenu(Menu menu){
+        TokenStorage storage = new TokenStorage(this);
+        boolean loggedIn = storage.isLoggedIn();
+
+        menu.findItem(R.id.action_login).setVisible(!loggedIn);
+        MenuItem logout = menu.findItem(R.id.action_logout);
+        logout.setVisible(loggedIn);
+        if (loggedIn){
+            logout.setTitle("Odjava (" + storage.getName() + ")");
+        }
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    // Poziva se kad se vratimo na ovaj ekran (npr. nakon prijave) , trazi da se meni
+    // ponovo pripremi , pa se "Prijava" zamjeni sa "Odjava"
+    @Override
+    protected void onResume(){
+        super.onResume();
+        invalidateOptionsMenu();
     }
 
 

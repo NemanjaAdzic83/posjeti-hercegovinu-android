@@ -75,10 +75,16 @@ public class LoginActivity extends AppCompatActivity {
             viewModel.login(email, password);
         }
 
+    }
 
-
-
-
+    // Poziva se kad se vratimo na Login , ako je korisnik u medjuvremenu prijavljen (registracij izdaje token)
+    // Login vise nije potreban
+    @Override
+    protected void onResume(){
+        super.onResume();
+        if (new com.posjetihercegovinu.app.data.local.TokenStorage(this).isLoggedIn()){
+            finish();
+        }
     }
 
 }

@@ -17,4 +17,9 @@
         android:title="Prijava"
         app:showAsAction="never"/>
 
+    <item
+        android:id="@+id/action_logout"
+        android:title="Odjava"
+        app:showAsAction="never"/>
+
 </menu>
