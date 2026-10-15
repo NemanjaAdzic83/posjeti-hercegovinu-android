@@ -52,6 +52,11 @@ public class PlaceViewModel extends ViewModel {
         return selectedCategoryId;
     }
 
+    // Vraca tekst pretrage koji je trenutno aktivan, da ga fragment moze ponovo upisati u polje
+    public String getCurrentQuery(){
+        return currentQuery;
+    }
+
     // Cim se ViewMOdel napravi , odmah ucitaj mjesta
     public PlaceViewModel(){
         loadCategories();

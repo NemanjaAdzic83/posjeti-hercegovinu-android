@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_places"
+        android:icon="@drawable/ic_place"
+        android:title="Mjesta"/>
+    <item
+        android:id="@+id/nav_accommodation"
+        android:icon="@drawable/ic_hotel"
+        android:title="Smjestaj"/>
+    <item
+        android:id="@+id/nav_food"
+        android:icon="@drawable/ic_restaurant"
+        android:title="Hrana"/>
+    <item
+        android:id="@+id/nav_map"
+        android:icon="@drawable/ic_map"
+        android:title="Mapa"/>
+    <item
+        android:id="@+id/nav_favorites"
+        android:icon="@drawable/ic_favorite_border"
+        android:title="Favoriti"/>
+
+</menu>
